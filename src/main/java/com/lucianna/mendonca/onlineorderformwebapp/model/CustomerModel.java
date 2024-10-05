@@ -46,9 +46,7 @@ public class CustomerModel {
     private String country;
 
     // Constructors
-    public CustomerModel() {
-
-    }
+    public CustomerModel() {}
 
     public CustomerModel(Long id, String firstName, String middleName, String lastName, String eMail, String contactNumber,
                          String streetAddress, String streetAddressLine2, String city, String stateProvince,
@@ -66,7 +64,6 @@ public class CustomerModel {
         this.postalZipCode = postalZipCode;
         this.country = country;
     }
-
 
     // Getters and Setters
     public Long getId() {
