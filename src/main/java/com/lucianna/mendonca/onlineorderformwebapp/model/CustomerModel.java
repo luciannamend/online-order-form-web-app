@@ -23,8 +23,11 @@ public class CustomerModel {
     @Column(name = "e_mail")
     private String eMail;
 
-    @Column(name = "contact_number")
-    private String contactNumber;
+    @Column(name = "area_code")
+    private String areaCode;
+
+    @Column(name = "phone_number")
+    private String phoneNumber;
 
     // Address fields
     @Column(name = "street_address")
@@ -48,15 +51,16 @@ public class CustomerModel {
     // Constructors
     public CustomerModel() {}
 
-    public CustomerModel(Long id, String firstName, String middleName, String lastName, String eMail, String contactNumber,
-                         String streetAddress, String streetAddressLine2, String city, String stateProvince,
-                         String postalZipCode, String country) {
+    public CustomerModel(Long id, String firstName, String middleName, String lastName, String eMail, String areaCode,
+                         String phoneNumber, String streetAddress, String streetAddressLine2, String city,
+                         String stateProvince, String postalZipCode, String country) {
         this.id = id;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
         this.eMail = eMail;
-        this.contactNumber = contactNumber;
+        this.areaCode = areaCode;
+        this.phoneNumber = phoneNumber;
         this.streetAddress = streetAddress;
         this.streetAddressLine2 = streetAddressLine2;
         this.city = city;
@@ -65,7 +69,6 @@ public class CustomerModel {
         this.country = country;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -106,12 +109,20 @@ public class CustomerModel {
         this.eMail = eMail;
     }
 
-    public String getContactNumber() {
-        return contactNumber;
+    public String getAreaCode() {
+        return areaCode;
     }
 
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
+    public void setAreaCode(String areaCode) {
+        this.areaCode = areaCode;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getStreetAddress() {
