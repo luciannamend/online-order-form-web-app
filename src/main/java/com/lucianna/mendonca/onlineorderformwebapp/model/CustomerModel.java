@@ -1,10 +1,10 @@
-package com.lucianna.mendonca.onlineorderformwebapp;
+package com.lucianna.mendonca.onlineorderformwebapp.model;
 
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "customer")
-public class Customer {
+public class CustomerModel {
 
     @Id
     @Column(name = "id")
@@ -46,13 +46,13 @@ public class Customer {
     private String country;
 
     // Constructors
-    public Customer() {
+    public CustomerModel() {
 
     }
 
-    public Customer(Long id, String firstName, String middleName, String lastName, String eMail, String contactNumber,
-                    String streetAddress, String streetAddressLine2, String city, String stateProvince,
-                    String postalZipCode, String country) {
+    public CustomerModel(Long id, String firstName, String middleName, String lastName, String eMail, String contactNumber,
+                         String streetAddress, String streetAddressLine2, String city, String stateProvince,
+                         String postalZipCode, String country) {
         this.id = id;
         this.firstName = firstName;
         this.middleName = middleName;
