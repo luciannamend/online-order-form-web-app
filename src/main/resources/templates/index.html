@@ -4,6 +4,35 @@
     <meta charset="UTF-8">
     <title>Order Form</title>
     <link rel="stylesheet" type="text/css" href="/styles.css">
+    <script>
+        // Update the phone model based on the selected brand
+        const phoneModels = {
+            "Apple": ["iPhone 14", "iPhone 15", "iPhone 16"],
+            "Samsung": ["Galaxy S23", "Galaxy S22", "Galaxy Note 20"],
+            "Google": ["Pixel 7", "Pixel 6"]
+        };
+        // Function to update the model based on brand
+        function updatePhoneModels() {
+            const brandSelect = document.getElementById("phoneBrand");
+            const modelSelect = document.getElementById("phoneModel");
+
+            // Clear existing options
+            modelSelect.innerHTML = "<option value=''>Please Select</option>";
+
+            // Get selected brand
+            const selectedBrand = brandSelect.value;
+
+            // Update phone models
+            if (selectedBrand in phoneModels) {
+                phoneModels[selectedBrand].forEach(model => {
+                    const option = document.createElement("option");
+                    option.value = model;
+                    option.text = model;
+                    modelSelect.add(option);
+                });
+            }
+        }
+    </script>
 </head>
 <body>
     <header content="title">
@@ -14,52 +43,60 @@
         <div class="container">
             <h1>Smart Phones Order Form</h1>
             <form>
+                <!--Customer Information-->
                 <div class="form-group">
+                    <!--Name-->
                     <label for="fullName">Full Name</label>
                     <input type="text" id="firstName" placeholder="First Name" required>
                     <input type="text" id="middleName" placeholder="Middle Name">
                     <input type="text" id="lastName" placeholder="Last Name" required>
                 </div>
                 <div class="form-group">
+                    <!--E-mail-->
                     <label for="email">E-mail</label>
                     <input type="email" id="email" placeholder="example@example.com" required>
                 </div>
                 <div class="form-group">
+                    <!--Contact-->
                     <label for="contactNumber">Contact Number</label>
                     <input type="tel" id="areaCode" placeholder="Area Code" required>
                     <input type="tel" id="phoneNumber" placeholder="Phone Number" required>
                 </div>
                 <div class="form-group">
+                    <!--Address-->
                     <label for="billingAddress">Billing Address</label>
                     <input type="text" id="streetAddress" placeholder="Street Address" required>
                     <input type="text" id="streetAddress2" placeholder="Street Address Line 2">
                     <input type="text" id="city" placeholder="City" required>
                     <input type="text" id="state" placeholder="State / Province" required>
-                    <select id="postalZip" required>
+                    <input type="text" id="zipCode" placeholder="Postal / Zip Code" required>
+                    <select id="country" required>
                         <option value="" disabled selected>Please Select</option>
-                        <option value="postalCode">Postal / Zip Code</option>
+                        <option value="canada">Canada</option>
+                        <option value="unitesStates">Unites States</option>
+                        <option value="mexico">Mexico</option>
                     </select>
-                    <input type="text" id="country" placeholder="Country" required>
                 </div>
+                <!--Product Information-->
                 <h2>Product Details</h2>
                 <div class="form-group">
                     <label for="productNumber">Product #:</label>
                     <input type="text" id="productNumber" required>
                 </div>
                 <div class="form-group">
-                    <label for="phoneBrand">Phone Brand</label>
-                    <select id="phoneBrand" required>
-                        <option value="" disabled selected>Select Brand</option>
-                        <option value="brand1">Brand 1</option>
-                        <option value="brand2">Brand 2</option>
+                    <label for="phoneBrand">Phone Brand:</label>
+                    <select id="phoneBrand" name="phoneBrand" onchange="updatePhoneModels()">
+                        <option value="">Please Select</option>
+                        <option value="Apple">Apple</option>
+                        <option value="Samsung">Samsung</option>
+                        <option value="Google">Google</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="phoneModel">Phone Model</label>
-                    <select id="phoneModel" required>
-                        <option value="" disabled selected>Select Model</option>
-                        <option value="model1">Model 1</option>
-                        <option value="model2">Model 2</option>
+                <div>
+                    <label for="phoneModel">Phone Model:</label>
+                    <select id="phoneModel" name="phoneModel">
+                        <option value="">Please Select</option>
+                        <!-- Options will be dynamically populated -->
                     </select>
                 </div>
                 <div class="form-group">
