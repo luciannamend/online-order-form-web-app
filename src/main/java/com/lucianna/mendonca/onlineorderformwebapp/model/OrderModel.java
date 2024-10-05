@@ -2,6 +2,8 @@ package com.lucianna.mendonca.onlineorderformwebapp.model;
 
 import jakarta.persistence.*;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "online_order")
 public class OrderModel {
@@ -23,6 +25,9 @@ public class OrderModel {
     @Column(name = "quantity")
     private int quantity;
 
+    @Column(name = "total_amount")
+    private BigDecimal totalAmount;
+
     // foreign key
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -32,16 +37,16 @@ public class OrderModel {
     public OrderModel(){}
 
     public OrderModel(Long id, Long productNumber, String phoneBrand, String phoneModel,
-                      int quantity, CustomerModel customer) {
+                      int quantity, BigDecimal totalAmount, CustomerModel customer) {
         this.id = id;
         this.productNumber = productNumber;
         this.phoneBrand = phoneBrand;
         this.phoneModel = phoneModel;
         this.quantity = quantity;
+        this.totalAmount = totalAmount;
         this.customer = customer;
     }
 
-    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -80,6 +85,14 @@ public class OrderModel {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public BigDecimal getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(BigDecimal totalAmount) {
+        this.totalAmount = totalAmount;
     }
 
     public CustomerModel getCustomer() {
