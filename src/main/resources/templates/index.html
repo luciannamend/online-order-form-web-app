@@ -1,38 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Order Form</title>
+    <!-- css style link -->
     <link rel="stylesheet" type="text/css" href="/styles.css">
-    <script>
-        // Update the phone model based on the selected brand
-        const phoneModels = {
-            "Apple": ["iPhone 14", "iPhone 15", "iPhone 16"],
-            "Samsung": ["Galaxy S23", "Galaxy S22", "Galaxy Note 20"],
-            "Google": ["Pixel 7", "Pixel 6"]
-        };
-        // Function to update the model based on brand
-        function updatePhoneModels() {
-            const brandSelect = document.getElementById("phoneBrand");
-            const modelSelect = document.getElementById("phoneModel");
-
-            // Clear existing options
-            modelSelect.innerHTML = "<option value=''>Please Select</option>";
-
-            // Get selected brand
-            const selectedBrand = brandSelect.value;
-
-            // Update phone models
-            if (selectedBrand in phoneModels) {
-                phoneModels[selectedBrand].forEach(model => {
-                    const option = document.createElement("option");
-                    option.value = model;
-                    option.text = model;
-                    modelSelect.add(option);
-                });
-            }
-        }
-    </script>
 </head>
 <body>
     <section class="form">
@@ -81,18 +53,20 @@
                 </div>
                 <div class="form-group">
                     <label for="phoneBrand">Phone Brand:</label>
-                    <select id="phoneBrand" name="phoneBrand" onchange="updatePhoneModels()">
+                    <select id="phoneBrand" name="phoneBrand" onchange="populateModels();">
+                        <!-- Iterating over the products from the model -->
                         <option value="">Please Select</option>
-                        <option value="Apple">Apple</option>
-                        <option value="Samsung">Samsung</option>
-                        <option value="Google">Google</option>
+                        <option th:each="brand : ${productsMap.keySet()}"
+                                th:value="${brand}"
+                                th:text="${brand}">
+                        </option>
                     </select>
                 </div>
-                <div>
-                    <label for="phoneModel">Phone Model:</label>
-                    <select id="phoneModel" name="phoneModel">
+
+                <div class="form-group">
+                    <label for="productId">Phone Model:</label>
+                    <select id="productId" name="productId">
                         <option value="">Please Select</option>
-                        <!-- Options will be dynamically populated -->
                     </select>
                 </div>
                 <div class="form-group">
@@ -114,4 +88,24 @@
         </footer>
     </section>
 </body>
+<!-- javascript -->
+<script th:inline="javascript">
+    const productsMap = /*[[${productsMap}]]*/ {};
+    console.log(productsMap)
+    function populateModels() {
+        const brandSelect = document.getElementById('phoneBrand');
+        const modelSelect = document.getElementById('productId');
+
+        const selectedBrand = brandSelect.value;
+
+        if (selectedBrand && productsMap[selectedBrand]) {
+            productsMap[selectedBrand].forEach(product => {
+                const option = document.createElement('option');
+                option.value = product.productId; // Assuming productId is accessible
+                option.textContent = product.phoneModel; // Assuming phoneModel is accessible
+                modelSelect.appendChild(option);
+            });
+        }
+    }
+</script>
 </html>
