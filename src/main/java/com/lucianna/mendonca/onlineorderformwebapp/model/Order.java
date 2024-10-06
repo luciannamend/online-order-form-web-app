@@ -9,18 +9,9 @@ import java.math.BigDecimal;
 public class Order {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "order_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(name = "product_number")
-    private Long productNumber;
-
-    @Column(name = "phone_brand")
-    private String phoneBrand;
-
-    @Column(name = "phone_model")
-    private String phoneModel;
+    private Long orderId;
 
     @Column(name = "quantity")
     private int quantity;
@@ -33,50 +24,30 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    //Constructors
-    public Order(){}
+    // foreign key
+    @OneToOne
+    @JoinColumn(name="product_id")
+    private Product product;
 
-    public Order(Long id, Long productNumber, String phoneBrand, String phoneModel,
-                 int quantity, BigDecimal totalAmount, Customer customer) {
-        this.id = id;
-        this.productNumber = productNumber;
-        this.phoneBrand = phoneBrand;
-        this.phoneModel = phoneModel;
+    // Constructors
+    public Order() {
+    }
+
+    public Order(Long orderId, int quantity, BigDecimal totalAmount, Customer customer, Product product) {
+        this.orderId = orderId;
         this.quantity = quantity;
         this.totalAmount = totalAmount;
         this.customer = customer;
+        this.product = product;
     }
 
-    public Long getId() {
-        return id;
+    // Getters and Setters
+    public Long getOrderId() {
+        return orderId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getProductNumber() {
-        return productNumber;
-    }
-
-    public void setProductNumber(Long productNumber) {
-        this.productNumber = productNumber;
-    }
-
-    public String getPhoneBrand() {
-        return phoneBrand;
-    }
-
-    public void setPhoneBrand(String phoneBrand) {
-        this.phoneBrand = phoneBrand;
-    }
-
-    public String getPhoneModel() {
-        return phoneModel;
-    }
-
-    public void setPhoneModel(String phoneModel) {
-        this.phoneModel = phoneModel;
+    public void setOrderId(Long orderId) {
+        this.orderId = orderId;
     }
 
     public int getQuantity() {
@@ -101,5 +72,13 @@ public class Order {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
     }
 }

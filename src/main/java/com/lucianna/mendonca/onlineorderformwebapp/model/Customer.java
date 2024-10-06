@@ -7,9 +7,9 @@ import jakarta.persistence.*;
 public class Customer {
 
     @Id
-    @Column(name = "id")
+    @Column(name = "customer_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long customerId;
 
     @Column(name = "first_name")
     private String firstName;
@@ -51,10 +51,10 @@ public class Customer {
     // Constructors
     public Customer() {}
 
-    public Customer(Long id, String firstName, String middleName, String lastName, String eMail, String areaCode,
+    public Customer(Long customerId, String firstName, String middleName, String lastName, String eMail, String areaCode,
                     String phoneNumber, String streetAddress, String streetAddressLine2, String city,
                     String stateProvince, String postalZipCode, String country) {
-        this.id = id;
+        this.customerId = customerId;
         this.firstName = firstName;
         this.middleName = middleName;
         this.lastName = lastName;
@@ -69,12 +69,13 @@ public class Customer {
         this.country = country;
     }
 
-    public Long getId() {
-        return id;
+    // Getters and Setters
+    public Long getCustomerId() {
+        return customerId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setCustomerId(Long customerId) {
+        this.customerId = customerId;
     }
 
     public String getFirstName() {
