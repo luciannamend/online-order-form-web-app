@@ -6,7 +6,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "online_order")
-public class OrderModel {
+public class Order {
 
     @Id
     @Column(name = "id")
@@ -31,13 +31,13 @@ public class OrderModel {
     // foreign key
     @ManyToOne
     @JoinColumn(name = "customer_id")
-    private CustomerModel customer;
+    private Customer customer;
 
     //Constructors
-    public OrderModel(){}
+    public Order(){}
 
-    public OrderModel(Long id, Long productNumber, String phoneBrand, String phoneModel,
-                      int quantity, BigDecimal totalAmount, CustomerModel customer) {
+    public Order(Long id, Long productNumber, String phoneBrand, String phoneModel,
+                 int quantity, BigDecimal totalAmount, Customer customer) {
         this.id = id;
         this.productNumber = productNumber;
         this.phoneBrand = phoneBrand;
@@ -95,11 +95,11 @@ public class OrderModel {
         this.totalAmount = totalAmount;
     }
 
-    public CustomerModel getCustomer() {
+    public Customer getCustomer() {
         return customer;
     }
 
-    public void setCustomer(CustomerModel customer) {
+    public void setCustomer(Customer customer) {
         this.customer = customer;
     }
 }

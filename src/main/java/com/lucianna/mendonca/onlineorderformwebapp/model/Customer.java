@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "customer")
-public class CustomerModel {
+public class Customer {
 
     @Id
     @Column(name = "id")
@@ -49,11 +49,11 @@ public class CustomerModel {
     private String country;
 
     // Constructors
-    public CustomerModel() {}
+    public Customer() {}
 
-    public CustomerModel(Long id, String firstName, String middleName, String lastName, String eMail, String areaCode,
-                         String phoneNumber, String streetAddress, String streetAddressLine2, String city,
-                         String stateProvince, String postalZipCode, String country) {
+    public Customer(Long id, String firstName, String middleName, String lastName, String eMail, String areaCode,
+                    String phoneNumber, String streetAddress, String streetAddressLine2, String city,
+                    String stateProvince, String postalZipCode, String country) {
         this.id = id;
         this.firstName = firstName;
         this.middleName = middleName;
