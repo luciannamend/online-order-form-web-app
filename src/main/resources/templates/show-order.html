@@ -1,10 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>SHOW ORDER</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
 </head>
 <body>
-    <h1>YOUR ORDER IS BEING DISPLAYED</h1>
+    <h1>Welcome, <span th:text="${order.customer.firstName}">Customer</span>!</h1>
+    <p>Your order details are as follows:</p>
+    <ul>
+        <li><span class="highlight">Email Address:</span> <span th:text="${order.customer.eMail}">email@example.com</span></li>
+        <li><span class="highlight">Phone:</span> <span th:text="${order.customer.phoneNumber}">123-456-7890</span></li>
+        <li><span class="highlight">Address:</span> <span th:text="${order.customer.streetAddress}">streetAddress</span></li>
+        <li><span class="highlight"></span> <span th:text="${order.customer.streetAddressLine2}">streetAddressLine2</span></li>
+    </ul>
+
+    <h2>Product Details</h2>
+    <p><strong>Phone Brand:</strong> <span th:text="${order.product.phoneBrand}">Phone Brand</span></p>
+    <p><strong>Phone Model:</strong> <span th:text="${order.product.phoneModel}">Phone Model</span></p>
+    <p><strong>Phone Price:</strong> CAD <span th:text="${order.product.unitPrice}">0.00</span></p>
+    <p><strong>Quantity:</strong> <span th:text="${order.quantity}">1</span></p>
+
+    <p class="total">Total: CAD <span th:text="${order.totalAmount}">0.00</span></p>
 </body>
 </html>

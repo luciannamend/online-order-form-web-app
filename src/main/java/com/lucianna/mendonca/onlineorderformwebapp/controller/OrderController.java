@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.math.BigDecimal;
@@ -28,15 +29,6 @@ public class OrderController {
     private ProductService productService;
     @Autowired
     private ProductRepository productRepository;
-
-
-//    @PostMapping
-//    public ResponseEntity<Order> saveOrder(@ModelAttribute Order order){
-//        // save order
-//        Order savedOrder = orderRepository.save(order);
-//        // return saved order
-//        return new ResponseEntity<>(savedOrder, HttpStatus.CREATED);
-//    }
 
     @GetMapping("/show-order")
     public String getOrder(){
@@ -72,7 +64,8 @@ public class OrderController {
 
     @PostMapping("/submit-order")
     public RedirectView submitOrder(@ModelAttribute Customer customer, @ModelAttribute Product product,
-            @ModelAttribute Order order, @RequestParam("productNumber") String productNumberString) {
+            @ModelAttribute Order order, @RequestParam("productNumber") String productNumberString,
+                                    RedirectAttributes redirectAttributes) {
 
         try{
             customerRepository.save(customer);
@@ -81,13 +74,17 @@ public class OrderController {
             int productNumber = Integer.parseInt(productNumberString);
             product.setProductNumber(productNumber);
 
-            BigDecimal unitPrice = productRepository.findById(product.getProductId()).get().getUnitPrice();
-            BigDecimal totalAmount = unitPrice.multiply(BigDecimal.valueOf(order.getQuantity()));
-            order.setProduct(product);
+            Product existingProduct = productRepository.findById(product.getProductId()).get();
+            BigDecimal totalAmount = existingProduct.getUnitPrice().multiply(BigDecimal.valueOf(order.getQuantity()));
+
+            order.setProduct(existingProduct);
             order.setCustomer(customer);
             order.setTotalAmount(totalAmount);
 
             orderRepository.save(order);
+
+            // Add attributes to be accessed in the redirected page
+            redirectAttributes.addFlashAttribute("order", order);
 
             // Redirect
             return new RedirectView("show-order");
@@ -98,20 +95,4 @@ public class OrderController {
             throw new RuntimeException(e);
         }
     }
-
-//    @GetMapping("/orderConfirmation/{customerId}/{orderId}")
-//    public String getOrderConfirmation(@PathVariable Long customerId, @PathVariable Long orderId, Model model) {
-//        // Fetch the customer and order from the database
-//        Optional<Customer> customer = customerRepository.findById(customerId);
-//        Optional<Order> order = orderRepository.findById(orderId);
-//
-//        // Add customer and order data to the model
-//        if (customer.isPresent() && order.isPresent()) {
-//            model.addAttribute("customer", customer.get());
-//            model.addAttribute("order", order.get());
-//            return ("show-order");
-//        }
-//        return ("error");
-//    }
-
 }
