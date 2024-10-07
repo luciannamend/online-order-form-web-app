@@ -49,7 +49,7 @@
                 <h2>Product Details</h2>
                 <div class="form-group">
                     <label for="productNumber">Product #:</label>
-                    <input type="text" id="productNumber" name="productNumber" required>
+                    <input type="number" id="productNumber" name="productNumber" readonly>
                 </div>
                 <div class="form-group">
                     <label for="phoneBrand">Phone Brand:</label>
@@ -90,12 +90,12 @@
 </body>
 <!-- javascript -->
 <script th:inline="javascript">
+
     const productsMap = /*[[${productsMap}]]*/ {};
-    console.log(productsMap)
+    //console.log(productsMap)
     function populateModels() {
         const brandSelect = document.getElementById('phoneBrand');
         const modelSelect = document.getElementById('productId');
-
         const selectedBrand = brandSelect.value;
 
         if (selectedBrand && productsMap[selectedBrand]) {
@@ -105,6 +105,25 @@
                 option.textContent = product.phoneModel; // Assuming phoneModel is accessible
                 modelSelect.appendChild(option);
             });
+        }
+    }
+
+    document.getElementById("productId").addEventListener("change", function() {
+        updateProductNumber();
+    });
+
+    function updateProductNumber() {
+        const phoneBrand = document.getElementById("phoneBrand").value;
+        const productId = document.getElementById("productId").value;
+        const productNumberInput = document.getElementById("productNumber");
+
+        if (productsMap[phoneBrand]) {
+            const selectedProduct = productsMap[phoneBrand].find(product => product.productId == productId);
+            if (selectedProduct) {
+                productNumberInput.value = selectedProduct.productNumber;
+            } else {
+                productNumberInput.value = ''; // Clear if no product is selected
+            }
         }
     }
 </script>

@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.math.BigDecimal;
 import java.util.*;
 
 @Controller
@@ -25,7 +26,8 @@ public class OrderController {
     private OrderRepository orderRepository;
     @Autowired
     private ProductService productService;
-
+    @Autowired
+    private ProductRepository productRepository;
 
 
 //    @PostMapping
@@ -70,26 +72,29 @@ public class OrderController {
 
     @PostMapping("/submit-order")
     public RedirectView submitOrder(@ModelAttribute Customer customer, @ModelAttribute Product product,
-            @ModelAttribute Order order) {
+            @ModelAttribute Order order, @RequestParam("productNumber") String productNumberString) {
 
         try{
-            // save objs
             customerRepository.save(customer);
 
-            //TODO: Buscar o produto por id pra saber o preco product = repos.findById(prod.getId())
+            // Convert productNumberString to integer
+            int productNumber = Integer.parseInt(productNumberString);
+            product.setProductNumber(productNumber);
 
-            //TODO: Calcular o valor do produto * a quantidate
-
+            BigDecimal unitPrice = productRepository.findById(product.getProductId()).get().getUnitPrice();
+            BigDecimal totalAmount = unitPrice.multiply(BigDecimal.valueOf(order.getQuantity()));
             order.setProduct(product);
             order.setCustomer(customer);
+            order.setTotalAmount(totalAmount);
 
             orderRepository.save(order);
+
             // Redirect
             return new RedirectView("show-order");
 
+        } catch (NumberFormatException e) {
+            throw new RuntimeException("Invalid product number: " + productNumberString);
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        } catch (Throwable e) {
             throw new RuntimeException(e);
         }
     }
