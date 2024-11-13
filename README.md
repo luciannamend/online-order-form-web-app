@@ -18,4 +18,8 @@ Key Technologies:
   - JavaScript for dynamic form handling and real-time updates
   - Java for backend logic
   - CSS for styling and formatting
-This exercise showcases the development of a Spring MVC application, focusing on form handling, data binding, responsive UI design, and dynamic form interactions with JavaScript.
+
+
+**Disclaimer**
+
+This project is intended solely as an educational exercise to practice building a web application using the MVC design pattern with the Spring Framework. Please note that this application is not a fully functional e-commerce platform and does not process actual transactions or store data persistently. It serves as a demonstration of form handling, data binding, and dynamic form interactions using Spring MVC, Thymeleaf, and JavaScript.
